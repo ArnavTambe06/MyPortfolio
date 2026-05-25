@@ -1,0 +1,236 @@
+@import "tailwindcss";
+@theme {
+  --color-bg: #080c0a;
+  --color-surface: #0d1210;
+  --color-surface-2: #111916;
+  --color-surface-3: #162119;
+  --color-border: #1e2e24;
+  --color-border-bright: #2a4035;
+  --color-phosphor: #4afa8a;
+  --color-phosphor-dim: #2a7a50;
+  --color-phosphor-glow: #1a4a30;
+  --color-amber: #f0a030;
+  --color-amber-dim: #8a5a18;
+  --color-text: #c8d4cc;
+  --color-text-dim: #6a8070;
+  --color-text-bright: #e8f0ec;
+
+  --font-mono: "IBM Plex Mono", monospace;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-sans: "DM Sans", sans-serif;
+}
+
+:root {
+  --phosphor: #4afa8a;
+  --phosphor-dim: #2a7a50;
+  --bg: #080c0a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  cursor: none;
+}
+
+body {
+  background: var(--bg);
+  color: #c8d4cc;
+  font-family: "DM Sans", sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom cursor */
+.cursor {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: var(--phosphor);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition:
+    transform 0.08s ease,
+    width 0.2s ease,
+    height 0.2s ease,
+    opacity 0.2s ease;
+  mix-blend-mode: screen;
+}
+
+.cursor-ring {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(74, 250, 138, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition:
+    transform 0.18s ease,
+    width 0.25s ease,
+    height 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.cursor-ring.hovering {
+  width: 60px;
+  height: 60px;
+  border-color: rgba(74, 250, 138, 0.7);
+}
+
+/* Scanline effect */
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+.scanline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    transparent,
+    rgba(74, 250, 138, 0.04),
+    transparent
+  );
+  animation: scanline 8s linear infinite;
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #080c0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e2e24;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4afa8a;
+}
+
+/* Selection */
+::selection {
+  background: rgba(74, 250, 138, 0.2);
+  color: #e8f0ec;
+}
+
+/* Circuit line SVG patterns */
+.circuit-bg {
+  background-image:
+    linear-gradient(rgba(74, 250, 138, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74, 250, 138, 0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Glow effects */
+.glow-phosphor {
+  box-shadow:
+    0 0 20px rgba(74, 250, 138, 0.15),
+    0 0 60px rgba(74, 250, 138, 0.05);
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(74, 250, 138, 0.4);
+}
+
+/* Terminal cursor blink */
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+.blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* Noise texture overlay */
+.noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* Horizontal scrolling ticker */
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+.ticker-track {
+  animation: ticker 28s linear infinite;
+}
+
+/* Underline hover */
+.hover-underline {
+  position: relative;
+}
+.hover-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--phosphor);
+  transition: width 0.3s ease;
+}
+.hover-underline:hover::after {
+  width: 100%;
+}
+
+/* Animated gradient border */
+@keyframes border-rotate {
+  from {
+    --angle: 0deg;
+  }
+  to {
+    --angle: 360deg;
+  }
+}
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.gradient-border {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(#0d1210, #0d1210) padding-box,
+    conic-gradient(
+        from var(--angle),
+        #1e2e24,
+        #4afa8a30,
+        #1e2e24,
+        #4afa8a20,
+        #1e2e24
+      )
+      border-box;
+  animation: border-rotate 6s linear infinite;
+}
