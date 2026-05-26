@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 const items = [
   "BACKEND ENGINEERING",
@@ -18,12 +18,14 @@ const items = [
 export default function Ticker() {
   const repeated = [...items, ...items];
   return (
-    <div className="border-y border-border py-4 overflow-hidden bg-surface-2">
-      <div className="ticker-track flex gap-12 whitespace-nowrap w-max">
+    <div className="border-y border-border/70 py-4 overflow-hidden bg-surface/70 backdrop-blur-xl">
+      <div className="ticker-track flex gap-10 whitespace-nowrap w-max">
         {repeated.map((item, i) => (
-          <span key={i} className="flex items-center gap-12">
-            <span className="font-mono text-[10px] tracking-[0.2em] text-text-dim">{item}</span>
-            <span className="text-phosphor/40 text-xs">◈</span>
+          <span key={i} className="flex items-center gap-10">
+            <span className="font-mono text-[10px] tracking-[0.26em] text-text-dim uppercase">
+              {item}
+            </span>
+            <span className="text-celestial-light/60 text-xs">•</span>
           </span>
         ))}
       </div>

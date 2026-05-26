@@ -6,6 +6,7 @@ import Ticker from "./components/Ticker";
 import About from "./components/About";
 import Projects from "./components/Projects";
 import Experience from "./components/Experience";
+import Resume from "./components/Resume";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
@@ -15,8 +16,6 @@ export default function Home() {
   return (
     <>
       <Cursor />
-      {/* Scanline effect */}
-      <div className="scanline" />
       <Nav />
       <main>
         <Hero />
@@ -24,6 +23,7 @@ export default function Home() {
         <About />
         <Projects />
         <Experience />
+        <Resume />
         <Contact />
       </main>
       <Footer />

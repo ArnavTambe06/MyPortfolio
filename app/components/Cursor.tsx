@@ -10,6 +10,10 @@ export default function Cursor() {
     const ring = ringRef.current;
     if (!cursor || !ring) return;
 
+    if (window.matchMedia("(pointer: fine)").matches) {
+      document.body.classList.add("has-custom-cursor", "cursor-on");
+    }
+
     let mouseX = 0, mouseY = 0;
     let ringX = 0, ringY = 0;
 
@@ -32,13 +36,21 @@ export default function Cursor() {
     const onLeave = () => ring.classList.remove("hovering");
 
     document.addEventListener("mousemove", move);
-    document.querySelectorAll("a, button, [data-cursor]").forEach(el => {
+    const hoverables = Array.from(document.querySelectorAll("a, button, [data-cursor]"));
+    for (const el of hoverables) {
       el.addEventListener("mouseenter", onEnter);
       el.addEventListener("mouseleave", onLeave);
-    });
+    }
 
     animate();
-    return () => document.removeEventListener("mousemove", move);
+    return () => {
+      document.body.classList.remove("has-custom-cursor", "cursor-on");
+      document.removeEventListener("mousemove", move);
+      for (const el of hoverables) {
+        el.removeEventListener("mouseenter", onEnter);
+        el.removeEventListener("mouseleave", onLeave);
+      }
+    };
   }, []);
 
   return (

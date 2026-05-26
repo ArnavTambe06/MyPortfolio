@@ -9,32 +9,28 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: "#080c0a",
-        surface: "#0d1210",
-        "surface-2": "#111916",
-        "surface-3": "#162119",
-        border: "#1e2e24",
-        "border-bright": "#2a4035",
-        phosphor: "#4afa8a",
-        "phosphor-dim": "#2a7a50",
-        "phosphor-glow": "#1a4a30",
-        amber: "#f0a030",
-        "amber-dim": "#8a5a18",
-        text: "#c8d4cc",
-        "text-dim": "#6a8070",
-        "text-bright": "#e8f0ec",
+        // Vintage "old money" palette
+        bg: "#faf5e6", // soft cream background
+        surface: "#e3d9c6",
+        "surface-2": "#d5c9b3",
+        "surface-3": "#c2b59f",
+        border: "#b6a789",
+        "border-bright": "#a1977a",
+        primary: "#b8860b", // antique gold
+        "primary-dim": "#cdaa7d",
+        text: "#3e2723", // deep brown text
+        "text-dim": "#5d4037",
       },
       fontFamily: {
+        // Serif fonts for classy typography
+        display: ["'Playfair Display'", "serif"],
+        serif: ["'Cormorant Garamond'", "serif"],
+        // Retain existing monospace and sans options
         mono: ["'IBM Plex Mono'", "monospace"],
-        display: ["'Space Grotesk'", "sans-serif"],
         sans: ["'DM Sans'", "sans-serif"],
       },
-      backgroundImage: {
-        "grid-pattern": "linear-gradient(rgba(74,250,138,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(74,250,138,0.03) 1px, transparent 1px)",
-      },
-      backgroundSize: {
-        "grid": "60px 60px",
-      },
+      // Optional subtle paper texture background – can be customized later
+      backgroundImage: {},
     },
   },
   plugins: [],
