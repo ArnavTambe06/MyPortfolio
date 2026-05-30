@@ -1,25 +1,33 @@
-import "@fontsource/ibm-plex-mono/400.css";
-import "@fontsource/ibm-plex-mono/500.css";
-import "@fontsource/ibm-plex-mono/600.css";
-import "@fontsource/space-grotesk/400.css";
-import "@fontsource/space-grotesk/600.css";
-import "@fontsource/space-grotesk/700.css";
-import "@fontsource/dm-sans/400.css";
-import "@fontsource/dm-sans/500.css";
-
-
 import type { Metadata } from "next";
+import { Barlow_Condensed, JetBrains_Mono, Work_Sans } from "next/font/google";
 import "./globals.css";
 
+const display = Barlow_Condensed({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+  variable: "--font-display",
+});
+
+const body = Work_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-body",
+});
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["500", "700"],
+  variable: "--font-mono",
+});
+
 export const metadata: Metadata = {
-  title: "Arnav Tambe - Backend & Data Systems Engineer",
+  title: "Arnav Tambe | SYS_ARCH_V2.4",
   description:
-    "MCA student building ETL pipelines, REST APIs, data warehouses, and cloud-native systems. Targeting backend engineering and data engineering roles in Mumbai's BFSI and fintech sectors.",
-  keywords: ["backend engineer", "data engineer", "ETL", "GCP", "SQL", "Spring Boot", "Mumbai"],
-  authors: [{ name: "Arnav Tambe", url: "https://github.com/ArnavTambe06" }],
+    "Industrial-retro portfolio for Arnav Tambe, a backend and data systems engineer focused on APIs, pipelines, and reliability.",
   openGraph: {
-    title: "Arnav Tambe - Backend & Data Systems Engineer",
-    description: "Building systems that move data and power backends.",
+    title: "Arnav Tambe | SYS_ARCH_V2.4",
+    description:
+      "Industrial-retro portfolio inspired by a technical spec sheet and workshop manual aesthetic.",
     type: "website",
   },
 };
@@ -30,8 +38,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+      <body className="bg-bg font-body text-text antialiased">{children}</body>
     </html>
   );
 }

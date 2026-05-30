@@ -1,7 +1,8 @@
-﻿"use client";
-import { motion, useInView, useReducedMotion, type Variants } from "framer-motion";
+"use client";
+
+import { ArrowUpRight, Circle } from "lucide-react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useMemo, useRef } from "react";
-import { IconArrowUpRight, IconPointFilled } from "@tabler/icons-react";
 
 const projects = [
   {
@@ -60,195 +61,149 @@ const projects = [
   },
 ];
 
-function getCardVariants(reduceMotion: boolean): Variants {
+function getCardVariants(reduceMotion: boolean) {
   return {
     hidden: { opacity: 0, y: reduceMotion ? 0 : 16 },
     show: { opacity: 1, y: 0 },
   };
 }
 
-function getStaggerVariants(): Variants {
-  return {
-    hidden: {},
-    show: {
-      transition: {
-        staggerChildren: 0.05,
-        delayChildren: 0.02,
-      },
-    },
-  };
-}
-
-function getTagVariants(reduceMotion: boolean): { container: Variants; item: Variants } {
-  return {
-    container: {
-      hidden: {},
-      show: {
-        transition: {
-          staggerChildren: 0.02,
-          delayChildren: 0.0,
-        },
-      },
-    },
-    item: {
-      hidden: { opacity: 0 },
-      show: { opacity: 1 },
-    },
-  };
-}
-
-function ProjectCard({ p, index }: { p: (typeof projects)[0]; index: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
-  const reduceMotion = useReducedMotion() ?? false;
-  const cardVariants = useMemo(() => getCardVariants(reduceMotion), [reduceMotion]);
-  const tagVariants = useMemo(() => getTagVariants(reduceMotion), [reduceMotion]);
-
-  return (
-    <motion.article
-      ref={ref}
-      variants={cardVariants}
-      initial={reduceMotion ? "show" : "hidden"}
-      animate={reduceMotion || inView ? "show" : "hidden"}
-      transition={{ duration: 0.45, delay: reduceMotion ? 0 : index * 0.035, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={
-        reduceMotion
-          ? undefined
-          : {
-              y: -4,
-              scale: 1.008,
-            }
-      }
-      whileTap={reduceMotion ? undefined : { scale: 0.998 }}
-      className={`panel soft-shadow transition-transform duration-200 will-change-transform ${p.featured ? "lg:col-span-2" : ""}`}
-    >
-      <div className="flex items-center justify-between px-6 py-4 border-b border-border/60 bg-white/10">
-        <div className="flex items-center gap-4">
-          <span className="font-mono text-[10px] tracking-widest text-text-dim">{p.id}</span>
-          <span className="font-mono text-[10px] tracking-widest text-text-dim/70">{p.type}</span>
-        </div>
-        <span className="font-mono text-[10px] tracking-widest border border-border/70 px-2 py-1 text-text-dim">
-          {p.status}
-        </span>
-      </div>
-
-      <div className={`p-6 ${p.featured ? "lg:grid lg:grid-cols-2 lg:gap-10" : ""}`}>
-        <div>
-          <h3 className="font-display text-3xl font-semibold text-text-bright mb-1">{p.name}</h3>
-          <p className="font-mono text-xs text-text-dim mb-5">{p.sub}</p>
-          <p className="text-text text-base leading-relaxed mb-6">{p.desc}</p>
-
-          <motion.div
-            variants={tagVariants.container}
-            initial={reduceMotion ? "show" : "hidden"}
-            animate={reduceMotion || inView ? "show" : "hidden"}
-            className="flex flex-wrap gap-2 mb-6"
-          >
-            {p.stack.map((t) => (
-              <motion.span
-                key={t}
-                variants={tagVariants.item}
-                className="font-mono text-xs tracking-[0.14em] border border-border/70 bg-white/10 px-2.5 py-1.5 text-text-dim hover:text-text-bright transition-colors"
-              >
-                {t}
-              </motion.span>
-            ))}
-          </motion.div>
-
-          <div className="flex gap-4">
-            <motion.a
-              href={p.github}
-              target="_blank"
-              rel="noopener"
-              whileHover={reduceMotion ? undefined : { x: 2 }}
-              className="group/link flex items-center gap-2 font-mono text-xs text-text-dim hover:text-text-bright border border-border/70 bg-white/5 hover:bg-white/10 px-4 py-2 transition-all"
-            >
-              GITHUB
-              <IconArrowUpRight
-                size={14}
-                className="text-text-dim group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 transition-transform"
-              />
-            </motion.a>
-          </div>
-        </div>
-
-        {p.featured && (
-          <div className="mt-8 lg:mt-0">
-            <div className="font-mono text-[10px] tracking-widest text-text-dim mb-4">HIGHLIGHTS</div>
-            <div className="space-y-3">
-              {p.highlights.map((h, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: 10 }}
-                  animate={inView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.35, delay: 0.18 + i * 0.04 }}
-                  className="flex items-start gap-3 font-mono text-xs text-text"
-                >
-                  <IconPointFilled size={14} className="mt-0.5 flex-shrink-0 text-primary" />
-                  {h}
-                </motion.div>
-              ))}
-            </div>
-
-            <div className="mt-8 p-4 border border-border/70 bg-white/10 font-mono text-xs text-text-dim">
-              <div className="text-primary-dim mb-3">DATA_FLOW</div>
-              <div className="flex items-center flex-wrap gap-2 text-[10px]">
-                {["API", "QUEUE", "WORKER", "WAREHOUSE", "DASHBOARD"].map((node, ni, arr) => (
-                  <span key={ni} className="flex items-center gap-2">
-                    <span className="border border-border/70 bg-white/10 px-2 py-1 text-text-dim">{node}</span>
-                    {ni < arr.length - 1 && <span className="text-text-dim/60">→</span>}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </motion.article>
-  );
-}
-
 export default function Projects() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const reduceMotion = useReducedMotion() ?? false;
-  const gridVariants = useMemo(() => getStaggerVariants(), []);
+  const cardVariants = useMemo(() => getCardVariants(reduceMotion), [reduceMotion]);
 
   return (
-    <section id="projects" ref={ref} className="section-shell">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+    <section id="projects" ref={ref} className="border-b border-border bg-bg px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
+      <div className="mx-auto max-w-[1280px]">
         <motion.div
-          initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
+          initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.45 }}
-          className="flex items-end justify-between mb-12 flex-wrap gap-6"
+          className="mb-10 flex flex-wrap items-end justify-between gap-6"
         >
           <div>
-            <div className="section-kicker mb-4">SELECTED_WORK</div>
-            <h2 className="section-title">Systems I have shipped.</h2>
+            <div className="font-mono text-[11px] tracking-[0.18em] text-primary">SELECTED_WORK</div>
+            <h2 className="title-hover mt-3 font-display text-[clamp(2.2rem,4vw,4rem)] leading-[0.95] tracking-[0.02em] text-text">
+              Systems I have shipped.
+            </h2>
           </div>
           <a
             href="https://github.com/ArnavTambe06"
             target="_blank"
             rel="noopener"
-            className="pill-button pill-button--outline"
+            className="inline-flex items-center gap-2 border border-border bg-surface px-4 py-2 font-mono text-[11px] tracking-[0.18em] text-text-dim transition-colors hover:bg-surface-2 hover:text-primary"
           >
-            ALL_REPOS <IconArrowUpRight size={14} />
+            ALL_REPOS
+            <ArrowUpRight size={14} />
           </a>
         </motion.div>
 
         <motion.div
-          variants={gridVariants}
-          initial={reduceMotion ? "show" : "hidden"}
-          animate={reduceMotion || inView ? "show" : "hidden"}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+          initial="hidden"
+          animate={inView ? "show" : "hidden"}
+          variants={{
+            hidden: {},
+            show: {
+              transition: {
+                staggerChildren: 0.08,
+              },
+            },
+          }}
+          className="grid grid-cols-1 gap-6 lg:grid-cols-2"
         >
-          {projects.map((p, i) => (
-            <ProjectCard key={p.id} p={p} index={i} />
+          {projects.map((project) => (
+            <motion.article
+              key={project.id}
+              variants={cardVariants}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className={`soft-sheen border border-border bg-surface-container-lowest shadow-[8px_8px_0_rgba(140,113,102,0.12)] transition-transform duration-300 hover:-translate-y-1 ${
+                project.featured ? "lg:col-span-2" : ""
+              }`}
+            >
+              <div className={`p-6 sm:p-8 ${project.featured ? "lg:grid lg:grid-cols-2 lg:gap-10" : ""}`}>
+                <div>
+                  <div className="flex items-center justify-between gap-4 border-b border-border/60 pb-4">
+                    <div className="flex items-center gap-4">
+                      <span className="font-mono text-[10px] tracking-[0.2em] text-text-dim">
+                        {project.id}
+                      </span>
+                      <span className="font-mono text-[10px] tracking-[0.2em] text-text-dim">
+                        {project.type}
+                      </span>
+                    </div>
+                    <span className="border border-border px-2 py-1 font-mono text-[10px] tracking-[0.18em] text-primary">
+                      {project.status}
+                    </span>
+                  </div>
+
+                  <div className="mt-6">
+                    <h3 className="font-display text-[clamp(2rem,3vw,3rem)] leading-[0.95] text-text">
+                      {project.name}
+                    </h3>
+                    <p className="mt-1 font-mono text-xs tracking-[0.14em] text-text-dim">
+                      {project.sub}
+                    </p>
+                    <p className="mt-5 max-w-2xl font-body text-[1rem] leading-relaxed text-text">
+                      {project.desc}
+                    </p>
+
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      {project.stack.map((tag) => (
+                        <span
+                          key={tag}
+                          className="border border-border bg-surface px-3 py-2 font-mono text-[11px] tracking-[0.1em] text-text-dim"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener"
+                      className="soft-sheen mt-6 inline-flex items-center gap-2 border border-[#c64f00] bg-transparent px-4 py-3 font-mono text-[11px] font-bold tracking-[0.18em] text-[#c64f00] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#c64f00] hover:text-white"
+                    >
+                      GITHUB
+                      <ArrowUpRight size={14} />
+                    </a>
+                  </div>
+                </div>
+
+                {project.featured && (
+                  <div className="mt-8 lg:mt-0">
+                    <div className="font-mono text-[10px] tracking-[0.22em] text-primary">HIGHLIGHTS</div>
+                    <div className="mt-4 space-y-3">
+                      {project.highlights.map((highlight) => (
+                        <div key={highlight} className="flex items-start gap-3 font-body text-sm leading-relaxed text-text-dim">
+                          <Circle size={10} className="mt-1.5 flex-shrink-0 fill-primary text-primary" />
+                          {highlight}
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="mt-8 border border-border bg-surface p-4 font-mono text-xs text-text-dim">
+                      <div className="mb-3 text-primary">DATA_FLOW</div>
+                      <div className="flex flex-wrap items-center gap-2 text-[10px] tracking-[0.18em]">
+                        {["API", "QUEUE", "WORKER", "WAREHOUSE", "DASHBOARD"].map((node, index, arr) => (
+                          <span key={node} className="flex items-center gap-2">
+                            <span className="border border-border bg-bg px-2 py-1 text-text-dim">
+                              {node}
+                            </span>
+                            {index < arr.length - 1 && <span className="text-text-dim/60">→</span>}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </motion.article>
           ))}
         </motion.div>
       </div>
     </section>
   );
 }
-

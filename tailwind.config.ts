@@ -9,30 +9,39 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Vintage "old money" palette
-        bg: "#faf5e6", // soft cream background
-        surface: "#e3d9c6",
-        "surface-2": "#d5c9b3",
-        "surface-3": "#c2b59f",
-        border: "#b6a789",
-        "border-bright": "#a1977a",
-        primary: "#b8860b", // antique gold
-        "primary-dim": "#cdaa7d",
-        text: "#3e2723", // deep brown text
-        "text-dim": "#5d4037",
+        bg: "#fcf9f2",
+        surface: "#f6f3ec",
+        "surface-2": "#ebe8e1",
+        "surface-3": "#e5e2db",
+        "surface-container": "#f1eee7",
+        "surface-container-low": "#f6f3ec",
+        "surface-container-lowest": "#ffffff",
+        "surface-container-high": "#ebe8e1",
+        "surface-container-highest": "#e5e2db",
+        border: "#8c7166",
+        "border-bright": "#e0c0b2",
+        primary: "#9e3d00",
+        "primary-dim": "#c64f00",
+        text: "#1c1c18",
+        "text-dim": "#594238",
+        "text-bright": "#31312c",
+        "inverse-surface": "#31312c",
+        "inverse-on-surface": "#f3f0e9",
+        "secondary-container": "#d5e2e3",
+        secondary: "#546162",
+        "secondary-dim": "#bcc9ca",
+        "outline-variant": "#e0c0b2",
+        "electric-aqua": "#9e3d00",
       },
       fontFamily: {
-        // Serif fonts for classy typography
-        display: ["'Playfair Display'", "serif"],
-        serif: ["'Cormorant Garamond'", "serif"],
-        // Retain existing monospace and sans options
-        mono: ["'IBM Plex Mono'", "monospace"],
-        sans: ["'DM Sans'", "sans-serif"],
+        display: ["var(--font-display)", "sans-serif"],
+        body: ["var(--font-body)", "sans-serif"],
+        mono: ["var(--font-mono)", "monospace"],
+        serif: ["var(--font-serif)", "serif"],
       },
-      // Optional subtle paper texture background – can be customized later
-      backgroundImage: {},
     },
   },
   plugins: [],
 };
+
 export default config;
