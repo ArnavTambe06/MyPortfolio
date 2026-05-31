@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-import { ArrowUpRight, Circle } from "lucide-react";
+import { ArrowUpRight, CircleCheckBig } from "lucide-react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useMemo, useRef } from "react";
 
@@ -18,25 +18,33 @@ type Project = {
   live?: string;
 };
 
+const PAYSTREAM_FLOW = [
+  { label: "JWT AUTH", sub: "Login + RBAC" },
+  { label: "WALLETS", sub: "Balance + access" },
+  { label: "TRANSACTIONS", sub: "Deposit / Withdraw / Transfer" },
+  { label: "PAYMENTS", sub: "Gateway orchestration" },
+  { label: "ADMIN + HEALTH", sub: "Audit, metrics, status" },
+];
+
 const projects: Project[] = [
   {
     id: "01",
-    name: "PayStream UI",
-    sub: "Modern payment orchestration dashboard",
-    type: "FULL-STACK | FINTECH | UI",
+    name: "PayStream",
+    sub: "Production-grade payment orchestration backend",
+    type: "BACKEND | FINTECH | RESILIENCE",
     featured: true,
     status: "DEPLOYED",
     desc:
-      "A polished React dashboard for the PayStream payment orchestration platform, focused on secure authentication, wallet visibility, transaction flows, and admin operations with a live Vercel deployment.",
+      "Production-grade payment orchestration API built with Java 21 and Spring Boot 3.5, focused on secure transactions, resilience, caching, and admin operations.",
     highlights: [
-      "Secure JWT login and protected routes",
-      "Wallet balances with account insights",
-      "Transaction history and money transfers",
-      "Admin controls and monitoring views",
+      "Double-entry ledger with audit trail",
+      "Pessimistic locking and idempotency keys",
+      "Circuit breaker with fallback provider",
+      "Redis caching, rate limiting, and admin APIs",
     ],
-    stack: ["React", "Vite", "Tailwind CSS", "Zustand", "Axios", "React Router", "Vercel"],
+    stack: ["Java 21", "Spring Boot 3.5", "PostgreSQL", "Redis", "Flyway", "Resilience4j", "Maven"],
     live: "https://pay-stream-ui.vercel.app/",
-    github: "https://github.com/ArnavTambe06/paystream-ui",
+    github: "https://github.com/ArnavTambe06/PayStream.git",
   },
   {
     id: "02",
@@ -95,7 +103,7 @@ export default function Projects() {
         <motion.div
           initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.45 }}
+          transition={{ duration: 0.22 }}
           className="mb-10 flex flex-wrap items-end justify-between gap-6"
         >
           <div>
@@ -122,7 +130,7 @@ export default function Projects() {
             hidden: {},
             show: {
               transition: {
-                staggerChildren: 0.08,
+                staggerChildren: 0.03,
               },
             },
           }}
@@ -132,7 +140,7 @@ export default function Projects() {
             <motion.article
               key={project.id}
               variants={cardVariants}
-              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
               className={`soft-sheen border border-border bg-surface-container-lowest shadow-[8px_8px_0_rgba(140,113,102,0.12)] transition-transform duration-300 hover:-translate-y-1 hover:border-[#c64f00] ${
                 project.featured ? "lg:col-span-2" : ""
               }`}
@@ -156,16 +164,18 @@ export default function Projects() {
                     <p className="mt-1 font-mono text-xs tracking-[0.14em] text-text-dim">{project.sub}</p>
                     <p className="mt-5 max-w-2xl font-body text-[1rem] leading-relaxed text-text">{project.desc}</p>
 
-                    <div className="mt-6 flex flex-wrap gap-2">
-                      {project.stack.map((tag) => (
-                        <span
-                          key={tag}
-                          className="border border-border bg-surface px-3 py-2 font-mono text-[11px] tracking-[0.1em] text-text-dim"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                    {!project.featured && (
+                      <div className="mt-6 flex flex-wrap gap-2">
+                        {project.stack.map((tag) => (
+                          <span
+                            key={tag}
+                            className="border border-border bg-surface px-3 py-2 font-mono text-[11px] tracking-[0.1em] text-text-dim"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
 
                     <div className="mt-6 flex flex-wrap gap-3">
                       {project.live && (
@@ -193,73 +203,68 @@ export default function Projects() {
                 </div>
 
                 {project.featured && (
-                  <div className="mt-8 lg:mt-0">
-                    <div className="font-mono text-[10px] tracking-[0.22em] text-primary">HIGHLIGHTS</div>
-                    <div className="mt-4 space-y-3 rounded-none border border-border bg-[#fff8f0] p-4">
-                      {project.highlights.map((highlight) => (
-                        <div key={highlight} className="flex items-start gap-3 font-body text-sm leading-relaxed text-text-dim">
-                          <Circle size={10} className="mt-1.5 flex-shrink-0 fill-[#c64f00] text-[#c64f00]" />
-                          {highlight}
-                        </div>
-                      ))}
-                    </div>
-
-                    <motion.div
-                      whileHover={{
-                        y: -5,
-                        scale: 1.01,
-                        boxShadow: "0 18px 34px rgba(28, 28, 24, 0.16)",
-                      }}
-                      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                      className="group relative mt-8 overflow-hidden border border-[#c64f00]/50 bg-[#fff4ea] p-4 font-mono text-xs text-[#5b3d2f] transition-colors duration-300 hover:border-[#c64f00]"
-                    >
-                      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(198,79,0,0.09),transparent_36%),linear-gradient(180deg,rgba(255,255,255,0.3),transparent_40%)] opacity-70 transition-opacity duration-300 group-hover:opacity-100" />
-                      <motion.div
-                        className="relative mb-3 text-[#c64f00]"
-                        initial={false}
-                        whileHover={{ x: 6, color: "#9e3d00" }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        DATA_FLOW
-                      </motion.div>
-                      <div className="relative flex flex-wrap items-center gap-2 text-[10px] tracking-[0.18em]">
-                        {["AUTH", "WALLET", "TRANSFER", "ADMIN", "DEPLOY"].map((node, index, arr) => (
-                          <span key={node} className="flex items-center gap-2">
-                            <motion.span
-                              initial={false}
-                              whileHover={{
-                                y: -4,
-                                scale: 1.06,
-                                borderColor: "rgba(198, 79, 0, 0.95)",
-                                backgroundColor: "rgba(255, 255, 255, 0.92)",
-                                boxShadow: "0 10px 18px rgba(198, 79, 0, 0.12)",
-                              }}
-                              transition={{ duration: 0.18, ease: "easeOut" }}
-                              className="border border-[#c64f00]/25 bg-white/75 px-2 py-1 text-[#5b3d2f] transition-colors duration-300"
-                            >
-                              {node}
-                            </motion.span>
-                            {index < arr.length - 1 && (
-                              <motion.span
-                                initial={false}
-                                className="text-[#c64f00]/70"
-                                animate={{ opacity: [0.45, 1, 0.45], x: [0, 6, 0] }}
-                                transition={{
-                                  duration: 1.4,
-                                  repeat: Infinity,
-                                  repeatType: "loop",
-                                  delay: index * 0.08,
-                                  ease: "easeInOut",
-                                }}
-                              >
-                                -&gt;
-                              </motion.span>
-                            )}
-                          </span>
+                  <>
+                    <div className="mt-8 lg:mt-0">
+                      <div className="font-mono text-[10px] tracking-[0.22em] text-primary">HIGHLIGHTS</div>
+                      <div className="mt-4 space-y-3 rounded-none border border-border bg-[#fff8f0] p-4">
+                        {project.highlights.map((highlight) => (
+                          <div key={highlight} className="flex items-start gap-3 font-body text-sm leading-relaxed text-text-dim">
+                            <CircleCheckBig size={14} className="mt-1 flex-shrink-0 text-primary" />
+                            {highlight}
+                          </div>
                         ))}
                       </div>
-                    </motion.div>
-                  </div>
+                    </div>
+
+                    <div className="mt-6 lg:col-span-2">
+                      <div className="rounded-none border border-border bg-surface p-4">
+                        <div className="flex items-center justify-between gap-3">
+                          <div className="font-mono text-[10px] tracking-[0.2em] text-primary">ARCHITECTURE_FLOW</div>
+                          <div className="font-mono text-[10px] tracking-[0.18em] text-text-dim">SYNCED_BACKEND_PATH</div>
+                        </div>
+
+                        <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
+                          {PAYSTREAM_FLOW.map((step, index) => (
+                            <motion.div
+                              key={step.label}
+                              initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                              animate={inView ? { opacity: 1, y: 0 } : {}}
+                              whileHover={
+                                reduceMotion
+                                  ? undefined
+                                  : {
+                                      y: -8,
+                                      scale: 1.05,
+                                      rotate: index % 2 === 0 ? -0.4 : 0.4,
+                                      boxShadow: "0 20px 40px rgba(198, 79, 0, 0.16)",
+                                      borderColor: "rgba(198, 79, 0, 0.65)",
+                                      zIndex: 20,
+                                    }
+                              }
+                              transition={{ duration: 0.14, delay: 0.04 + index * 0.025, ease: "easeOut" }}
+                              className="relative min-h-[6.5rem] cursor-pointer border border-[#c64f00]/25 bg-[#fffaf5] p-3 shadow-[0_8px_20px_rgba(198,79,0,0.05)] transition-colors duration-150"
+                            >
+                              <div className="font-mono text-[10px] tracking-[0.16em] text-[#c64f00]">{step.label}</div>
+                              <div className="mt-2 font-body text-[11px] leading-relaxed text-text-dim">{step.sub}</div>
+                              {index < PAYSTREAM_FLOW.length - 1 && (
+                                <div className="pointer-events-none absolute -right-1 top-1/2 hidden -translate-y-1/2 translate-x-full items-center gap-1 text-[#c64f00]/70 lg:flex">
+                                  <span className="h-px w-3 bg-current" />
+                                  <motion.span
+                                    animate={reduceMotion ? undefined : { opacity: [0.55, 1, 0.55], x: [0, 2, 0] }}
+                                    transition={{ duration: 0.7, repeat: Infinity, ease: "easeInOut" }}
+                                    className="font-mono text-[9px] tracking-[0.18em]"
+                                  >
+                                    FLOW
+                                  </motion.span>
+                                  <span className="h-px w-3 bg-current" />
+                                </div>
+                              )}
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </>
                 )}
               </div>
             </motion.article>
