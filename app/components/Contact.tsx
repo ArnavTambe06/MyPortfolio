@@ -61,11 +61,11 @@ export default function Contact() {
               have a problem involving scale, data, or reliability, I&apos;d love to help.
             </p>
 
-            <div className="soft-sheen mt-10 border border-border bg-bg p-5 shadow-[6px_6px_0_rgba(140,113,102,0.1)] transition-transform duration-300 hover:-translate-y-1">
-              <div className="font-mono text-[10px] tracking-[0.22em] text-primary">STATUS</div>
+            <div className="soft-sheen mt-10 border border-[#c64f00] bg-[#fff8f0] p-5 shadow-[6px_6px_0_rgba(140,113,102,0.1)] transition-transform duration-300 hover:-translate-y-1">
+              <div className="font-mono text-[10px] tracking-[0.22em] text-[#c64f00]">STATUS</div>
               <div className="mt-4 space-y-2 font-mono text-[11px] tracking-[0.08em] text-text-dim">
                 <div className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#c64f00]" />
                   AVAILABLE_NOW
                 </div>
                 <div>
@@ -97,11 +97,13 @@ export default function Contact() {
                   initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 12 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: 0.16 + i * 0.08, duration: 0.45 }}
-                  className={`soft-sheen border border-border p-5 shadow-[6px_6px_0_rgba(140,113,102,0.1)] transition-all duration-300 hover:-translate-y-1 ${
-                    link.primary ? "bg-surface-2" : "bg-bg"
+                  className={`soft-sheen border p-5 shadow-[6px_6px_0_rgba(140,113,102,0.1)] transition-all duration-300 hover:-translate-y-1 ${
+                    link.primary
+                      ? "border-[#c64f00] bg-[#fff8f0]"
+                      : "border-border bg-bg"
                   } hover:bg-surface-2`}
                 >
-                  <div className="font-mono text-[10px] tracking-[0.22em] text-primary">
+                  <div className="font-mono text-[10px] tracking-[0.22em] text-[#c64f00]">
                     {link.label}
                   </div>
                   <div className="mt-2 font-mono text-sm tracking-[0.08em] text-text">

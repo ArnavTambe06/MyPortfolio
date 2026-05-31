@@ -56,17 +56,17 @@ export default function Resume() {
             transition={{ duration: 0.55, delay: 0.08 }}
             className="lg:col-span-8"
           >
-            <div className="soft-sheen border-2 border-border bg-surface-container-lowest shadow-[8px_8px_0_rgba(140,113,102,0.12)] overflow-hidden transition-transform duration-300 hover:-translate-y-1">
-              <div className="flex items-center justify-between gap-4 border-b border-border bg-surface px-5 py-4">
+            <div className="soft-sheen border-2 border-[#c64f00] bg-surface-container-lowest shadow-[8px_8px_0_rgba(140,113,102,0.12)] overflow-hidden transition-transform duration-300 hover:-translate-y-1">
+              <div className="flex items-center justify-between gap-4 border-b border-[#c64f00] bg-[#fff5ec] px-5 py-4">
                 <div>
-                  <div className="font-mono text-[10px] tracking-[0.22em] text-primary">RESUME_PREVIEW</div>
+                  <div className="font-mono text-[10px] tracking-[0.22em] text-[#c64f00]">RESUME_PREVIEW</div>
                   <div className="mt-1 font-display text-xl uppercase tracking-[0.02em] text-text">
                     Arnav Tambe
                   </div>
                 </div>
                 <a
                   href="/resume"
-                  className="soft-sheen inline-flex items-center gap-2 border border-border bg-bg px-4 py-2 font-mono text-[11px] tracking-[0.18em] text-text-dim transition-all duration-300 hover:-translate-y-0.5 hover:bg-surface hover:text-primary"
+                  className="soft-sheen inline-flex items-center gap-2 border border-[#c64f00] bg-bg px-4 py-2 font-mono text-[11px] tracking-[0.18em] text-[#c64f00] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#c64f00] hover:text-white"
                 >
                   OPEN_VIEWER
                 </a>
