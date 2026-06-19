@@ -1,5 +1,7 @@
 # Arnav Portfolio
 
+https://my-portfolio-eta-five-54.vercel.app/
+
 A personal portfolio built with Next.js, React, and Tailwind CSS. It presents selected projects, experience, resume details, and contact links in a clean one-page layout.
 
 ## Features
@@ -26,7 +28,7 @@ npm install
 npm run dev
 ```
 
-Open https://my-portfolio-eta-five-54.vercel.app/ in your browser.
+Open http://localhost:3000/ in your browser.
 
 ## Available Scripts
 
